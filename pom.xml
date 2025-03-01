@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>huynhlq.dev.udemy</groupId>
-    <artifactId>FirstProject</artifactId>
+    <artifactId>MyKanban</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>FirstProject</name>
     <description>FirstProject</description>
