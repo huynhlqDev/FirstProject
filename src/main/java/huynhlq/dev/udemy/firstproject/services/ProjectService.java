@@ -8,6 +8,6 @@ public interface ProjectService {
     List<Project> getAll();
     Project create(Project project);
     Project update(Project project);
-    void delete(Project project);
+    boolean delete(long projectId);
     boolean existsById(Long id);
 }

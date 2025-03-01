@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.action;
+package huynhlq.dev.udemy.firstproject.apiAction;
 
 import huynhlq.dev.udemy.firstproject.common.Logger;
 import huynhlq.dev.udemy.firstproject.entities.Project;
@@ -13,13 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/project")
+@RequestMapping("/api/projects")
 public class ProjectAction {
 
     @Autowired
     private ProjectServiceImpl projectService;
 
-    @PostMapping("")
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        Logger.addActionLog("Retrieving all projects");
+        List<Project> projects = projectService.getAll();
+        return new ResponseEntity<>(projects, HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody @Validated Project project, BindingResult result) {
         // Authentication
 
@@ -39,7 +46,7 @@ public class ProjectAction {
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
 
-    @PostMapping("")
+    @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody @Validated Project project, BindingResult result) {
         // Authentication
 
@@ -59,10 +66,19 @@ public class ProjectAction {
         return new ResponseEntity<>(updateProject, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAll() {
-        Logger.addActionLog("Retrieving all projects");
-        List<Project> projects = projectService.getAll();
-        return new ResponseEntity<>(projects, HttpStatus.OK);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable long id) {
+        // Authentication
+
+        // logic
+        Logger.addActionLog("Deleting project ID: " + id);
+        boolean isDeleted = projectService.delete(id);
+        if (isDeleted) {
+            Logger.addActionLog("Deleted project ID: " + id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            Logger.addErrorLog("Failed to delete project ID: " + id);
+            return new ResponseEntity<>("Failed to delete project ID: " + id, HttpStatus.NOT_FOUND);
+        }
     }
 }
