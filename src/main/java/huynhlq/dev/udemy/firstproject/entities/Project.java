@@ -1,6 +1,7 @@
 package huynhlq.dev.udemy.firstproject.entities;
 
 import jakarta.persistence.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 
@@ -16,12 +17,18 @@ public class Project {
     private Date endDate;
     private Date createAt;
     private Date updateAt;
+    private boolean deleted;
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public Project() {}
 
     @PrePersist
     protected void onCreate() {
         this.createAt = new Date();
+        this.deleted = false;
     }
 
     @PreUpdate
