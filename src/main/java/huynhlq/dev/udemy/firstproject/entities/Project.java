@@ -1,6 +1,8 @@
 package huynhlq.dev.udemy.firstproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
@@ -9,15 +11,25 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(updatable = false)
+
+    @Column(updatable = false, unique = true)
     private String identifier;
 
+    @NotBlank(message = "Project name is required")
     private String name;
+
+    @NotBlank(message = "Project description is required")
     private String description;
+
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date startDate;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date endDate;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date createdAt;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedAt;
+
     private boolean deleted;
 
     public Project() {}
