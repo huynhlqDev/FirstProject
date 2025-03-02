@@ -41,7 +41,7 @@ public class ProjectAction {
         Project createdProject = projectService.create(project);
         if (createdProject == null) {
             Logger.addErrorLog("Failed to create project" + project.getName());
-            return new ResponseEntity<String>("Failed to create project", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to create project", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
@@ -61,7 +61,7 @@ public class ProjectAction {
         Project updateProject = projectService.update(project);
         if (updateProject == null) {
             Logger.addErrorLog("Failed to updated project" + project.getName());
-            return new ResponseEntity<String>("Failed to updated project", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to updated project", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(updateProject, HttpStatus.OK);
     }

@@ -1,7 +1,6 @@
 package huynhlq.dev.udemy.firstproject.entities;
 
 import jakarta.persistence.*;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 
@@ -10,30 +9,28 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(updatable = false)
+    private String identifier;
+
     private String name;
     private String description;
-    private String identifier;
     private Date startDate;
     private Date endDate;
-    private Date createAt;
-    private Date updateAt;
+    private Date createdAt;
+    private Date updatedAt;
     private boolean deleted;
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Project() {}
 
     @PrePersist
     protected void onCreate() {
-        this.createAt = new Date();
+        this.createdAt = new Date();
         this.deleted = false;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updateAt = new Date();
+        this.updatedAt = new Date();
     }
 
     public long getId() {
@@ -84,19 +81,28 @@ public class Project {
         this.endDate = endDate;
     }
 
-    public Date getCreateAt() {
-        return createAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Date createAt) {
+        this.createdAt = createAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updateAt) {
+        this.updatedAt = updateAt;
     }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
 }

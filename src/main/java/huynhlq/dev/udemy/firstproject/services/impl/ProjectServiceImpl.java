@@ -1,6 +1,5 @@
 package huynhlq.dev.udemy.firstproject.services.impl;
 
-import huynhlq.dev.udemy.firstproject.common.Logger;
 import huynhlq.dev.udemy.firstproject.entities.Project;
 import huynhlq.dev.udemy.firstproject.repositories.ProjectRepository;
 import huynhlq.dev.udemy.firstproject.services.ProjectService;
