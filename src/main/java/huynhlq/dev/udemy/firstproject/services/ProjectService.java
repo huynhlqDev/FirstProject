@@ -8,5 +8,4 @@ public interface ProjectService {
     List<Project> getAll();
     Project createOrUpdate(Project project);
     boolean delete(long projectId);
-    boolean existsById(Long id);
 }

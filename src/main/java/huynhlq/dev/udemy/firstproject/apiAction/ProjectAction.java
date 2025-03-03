@@ -23,14 +23,14 @@ public class ProjectAction {
     @Autowired
     private RequestValidator requestValidator;
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<?> getAll() {
         Logger.addActionLog("Retrieving all projects");
         List<Project> projects = projectService.getAll();
         return new ResponseEntity<>(projects, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid Project project, BindingResult result) {
         // Authentication
 
@@ -76,5 +76,10 @@ public class ProjectAction {
             Logger.addErrorLog("Failed to delete project ID: " + id);
             return new ResponseEntity<>("Failed to delete project ID: " + id, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/{projectId}")
+    public ResponseEntity<?> findById(@PathVariable String projectId) {
+        return new ResponseEntity<>(projectService.getById(projectId), HttpStatus.OK);
     }
 }

@@ -47,8 +47,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
-    @Override
-    public boolean existsById(Long id) {
-        return projectRepository.existsById(id);
+    public Project getById(String projectId) {
+        Project project = projectRepository.getByIdentifier(projectId);
+        if(project == null) {
+            throw new ProjectIdException("Project does not exist!");
+        }
+        return project;
     }
 }
