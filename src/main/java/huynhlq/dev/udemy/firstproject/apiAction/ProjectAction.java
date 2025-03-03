@@ -1,15 +1,16 @@
 package huynhlq.dev.udemy.firstproject.apiAction;
 
 import huynhlq.dev.udemy.firstproject.common.Logger;
+import huynhlq.dev.udemy.firstproject.common.RequestValidator;
 import huynhlq.dev.udemy.firstproject.entities.Project;
 import huynhlq.dev.udemy.firstproject.services.impl.ProjectServiceImpl;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,6 +20,9 @@ public class ProjectAction {
     @Autowired
     private ProjectServiceImpl projectService;
 
+    @Autowired
+    private RequestValidator requestValidator;
+
     @GetMapping
     public ResponseEntity<?> getAll() {
         Logger.addActionLog("Retrieving all projects");
@@ -27,47 +31,39 @@ public class ProjectAction {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody @Validated Project project, BindingResult result) {
+    public ResponseEntity<?> create(@RequestBody @Valid Project project, BindingResult result) {
         // Authentication
 
         // Request validation
-        if (result.hasErrors()) {
-            Logger.addErrorLog(result.getAllErrors());
-            return new ResponseEntity<>(result.getAllErrors().get(0), HttpStatus.BAD_REQUEST);
+        ResponseEntity<?> responseEntity = requestValidator.validate(result);
+        if (responseEntity != null) {
+            Logger.addErrorLog("Failed to validation: " + responseEntity);
+            return responseEntity;
         }
 
-        // logic
-        Logger.addActionLog("Creating project" + project.getName());
-        Project createdProject = projectService.create(project);
-        if (createdProject == null) {
-            Logger.addErrorLog("Failed to create project" + project.getName());
-            return new ResponseEntity<>("Failed to create project", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Logger.addActionLog("Creating project " + project.getName());
+        Project createdProject = projectService.createOrUpdate(project);
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody @Validated Project project, BindingResult result) {
+    public ResponseEntity<?> update(@RequestBody @Valid Project project, BindingResult result) {
         // Authentication
 
         // Request validation
-        if (result.hasErrors()) {
-            Logger.addErrorLog(result.getAllErrors());
-            return new ResponseEntity<>(result.getAllErrors().get(0), HttpStatus.BAD_REQUEST);
+        ResponseEntity<?> responseEntity = requestValidator.validate(result);
+        if (responseEntity != null) {
+            Logger.addErrorLog("Failed to validation: " + responseEntity);
+            return responseEntity;
         }
 
-        // logic
         Logger.addActionLog("Updating project" + project.getName());
-        Project updateProject = projectService.update(project);
-        if (updateProject == null) {
-            Logger.addErrorLog("Failed to updated project" + project.getName());
-            return new ResponseEntity<>("Failed to updated project", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Project updateProject = projectService.createOrUpdate(project);
         return new ResponseEntity<>(updateProject, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable @Min(value = 1, message = "ID must than 0!") long id) {
         // Authentication
 
         // logic

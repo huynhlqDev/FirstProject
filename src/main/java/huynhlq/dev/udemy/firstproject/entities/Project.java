@@ -3,6 +3,7 @@ package huynhlq.dev.udemy.firstproject.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -12,6 +13,8 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Project identifier is required")
+    @Size(min = 4, max = 5, message = "Size in 4 -> 5")
     @Column(updatable = false, unique = true)
     private String identifier;
 

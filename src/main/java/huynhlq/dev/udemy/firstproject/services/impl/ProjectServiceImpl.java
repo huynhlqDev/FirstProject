@@ -1,10 +1,16 @@
 package huynhlq.dev.udemy.firstproject.services.impl;
 
+import huynhlq.dev.udemy.firstproject.common.Logger;
 import huynhlq.dev.udemy.firstproject.entities.Project;
+import huynhlq.dev.udemy.firstproject.exceptions.ProjectIdException;
+import huynhlq.dev.udemy.firstproject.exceptions.ProjectIdExceptionResponse;
 import huynhlq.dev.udemy.firstproject.repositories.ProjectRepository;
 import huynhlq.dev.udemy.firstproject.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Array;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Service
@@ -20,19 +26,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project create(Project project) {
-        if(existsById(project.getId())) {
-            return null;
-        }
-        return projectRepository.save(project);
-    }
-
-    @Override
-    public Project update(Project project) {
-        if(existsById(project.getId())) {
+    public Project createOrUpdate(Project project) {
+        try {
+            project.setIdentifier(project.getIdentifier().toLowerCase());
             return projectRepository.save(project);
+        } catch (Exception e) {
+            throw new ProjectIdException("Project ID: " + project.getIdentifier() + " already exists!");
         }
-        return null;
     }
 
     @Override
