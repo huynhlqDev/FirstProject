@@ -1,11 +1,10 @@
 package huynhlq.dev.udemy.firstproject.config;
 
-import huynhlq.dev.udemy.firstproject.exception.CustomAccessDeniedHandler;
-import huynhlq.dev.udemy.firstproject.exception.CustomAuthenticationEntryPoint;
+import huynhlq.dev.udemy.firstproject.security.CustomAccessDeniedHandler;
+import huynhlq.dev.udemy.firstproject.security.CustomAuthenticationEntryPoint;
 import huynhlq.dev.udemy.firstproject.security.JwtAuthenticationFilter;
 import huynhlq.dev.udemy.firstproject.service.impl.CustomUserDetailsService;
 import huynhlq.dev.udemy.firstproject.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.exception;
+package huynhlq.dev.udemy.firstproject.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

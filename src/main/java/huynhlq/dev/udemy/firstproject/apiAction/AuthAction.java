@@ -1,11 +1,12 @@
 package huynhlq.dev.udemy.firstproject.apiAction;
 
 import huynhlq.dev.udemy.firstproject.model.dto.UserDTO;
+import huynhlq.dev.udemy.firstproject.model.entity.User;
 import huynhlq.dev.udemy.firstproject.model.request.LoginRequest;
 import huynhlq.dev.udemy.firstproject.model.response.LoginResponse;
 import huynhlq.dev.udemy.firstproject.model.response.LoginResponseData;
 import huynhlq.dev.udemy.firstproject.util.JwtUtil;
-import huynhlq.dev.udemy.firstproject.service.impl.UserService;
+import huynhlq.dev.udemy.firstproject.service.impl.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class AuthAction {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    public AuthAction(UserService userService, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
+    public AuthAction(UserServiceImpl userService, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
@@ -39,19 +40,19 @@ public class AuthAction {
             );
 
             String token = jwtUtil.generateAccessToken(request.getUsername());
-            UserDTO userDTO = userService.getUserDTO(request.getUsername());
+            UserDTO userDTO = userService.findByUsername(request.getUsername());
             LoginResponse response = new LoginResponse("0000", new LoginResponseData(token,userDTO));
 
             return ResponseEntity.ok(response);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("responseData");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("invalid username or password");
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody LoginRequest request) {
-        userService.save(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok("ok");
+    public ResponseEntity<?> register(@RequestBody User request) {
+        UserDTO userDTO = userService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
     }
 
 }
