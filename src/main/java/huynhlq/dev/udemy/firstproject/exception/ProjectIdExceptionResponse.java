@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.exceptions;
+package huynhlq.dev.udemy.firstproject.exception;
 
 /// Class be created for format JSON response be "key: value"
 /// example:

@@ -1,9 +1,8 @@
-package huynhlq.dev.udemy.firstproject.services.impl;
+package huynhlq.dev.udemy.firstproject.service.impl;
 
-import huynhlq.dev.udemy.firstproject.entities.Project;
-import huynhlq.dev.udemy.firstproject.entities.Task;
-import huynhlq.dev.udemy.firstproject.repositories.TaskRepository;
-import huynhlq.dev.udemy.firstproject.services.TaskService;
+import huynhlq.dev.udemy.firstproject.model.entity.Task;
+import huynhlq.dev.udemy.firstproject.repository.TaskRepository;
+import huynhlq.dev.udemy.firstproject.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

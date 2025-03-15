@@ -1,6 +1,7 @@
-package huynhlq.dev.udemy.firstproject.auth.jwt;
+package huynhlq.dev.udemy.firstproject.security;
 
-import huynhlq.dev.udemy.firstproject.auth.CustomUserDetailsService;
+import huynhlq.dev.udemy.firstproject.service.impl.CustomUserDetailsService;
+import huynhlq.dev.udemy.firstproject.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Component
@@ -42,8 +42,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         try {
-            // exceptions might be thrown in creating the claims if for example the token is expired
-
             // 3. Get the token
             String token = header.replace(jwtUtil.getPrefix(), "").replace(" ", "");
             // 4. Validate the token
@@ -55,13 +53,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (jwtUtil.validateAccessToken(token, userDetails.getUsername())) {
 
                     // 5. Create auth object
-                    // UsernamePasswordAuthenticationToken: A built-in object, used by spring to represent the current authenticated / being authenticated user.
-                    // It needs a list of authorities, which has type of GrantedAuthority interface, where SimpleGrantedAuthority is an implementation of that interface
                     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                             username, null, userDetails.getAuthorities());
-
                     // 6. Authenticate the user
-                    // Now, user is authenticated
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
             }

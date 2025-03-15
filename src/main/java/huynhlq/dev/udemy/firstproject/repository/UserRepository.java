@@ -1,6 +1,6 @@
-package huynhlq.dev.udemy.firstproject.repositories;
+package huynhlq.dev.udemy.firstproject.repository;
 
-import huynhlq.dev.udemy.firstproject.entities.User;
+import huynhlq.dev.udemy.firstproject.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.exceptions;
+package huynhlq.dev.udemy.firstproject.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

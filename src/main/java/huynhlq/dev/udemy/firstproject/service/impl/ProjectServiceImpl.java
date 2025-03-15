@@ -1,16 +1,12 @@
-package huynhlq.dev.udemy.firstproject.services.impl;
+package huynhlq.dev.udemy.firstproject.service.impl;
 
-import huynhlq.dev.udemy.firstproject.common.Logger;
-import huynhlq.dev.udemy.firstproject.entities.Project;
-import huynhlq.dev.udemy.firstproject.exceptions.ProjectIdException;
-import huynhlq.dev.udemy.firstproject.exceptions.ProjectIdExceptionResponse;
-import huynhlq.dev.udemy.firstproject.repositories.ProjectRepository;
-import huynhlq.dev.udemy.firstproject.services.ProjectService;
+import huynhlq.dev.udemy.firstproject.model.entity.Project;
+import huynhlq.dev.udemy.firstproject.exception.ProjectIdException;
+import huynhlq.dev.udemy.firstproject.repository.ProjectRepository;
+import huynhlq.dev.udemy.firstproject.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Array;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Service

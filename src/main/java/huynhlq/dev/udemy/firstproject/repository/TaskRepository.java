@@ -1,7 +1,6 @@
-package huynhlq.dev.udemy.firstproject.repositories;
+package huynhlq.dev.udemy.firstproject.repository;
 
-import huynhlq.dev.udemy.firstproject.entities.Project;
-import huynhlq.dev.udemy.firstproject.entities.Task;
+import huynhlq.dev.udemy.firstproject.model.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

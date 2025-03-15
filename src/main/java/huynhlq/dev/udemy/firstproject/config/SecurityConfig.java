@@ -1,8 +1,9 @@
-package huynhlq.dev.udemy.firstproject.auth;
-import huynhlq.dev.udemy.firstproject.auth.exception.CustomAccessDeniedHandler;
-import huynhlq.dev.udemy.firstproject.auth.exception.CustomAuthenticationEntryPoint;
-import huynhlq.dev.udemy.firstproject.auth.jwt.JwtAuthenticationFilter;
-import huynhlq.dev.udemy.firstproject.auth.jwt.JwtUtil;
+package huynhlq.dev.udemy.firstproject.config;
+import huynhlq.dev.udemy.firstproject.exception.CustomAccessDeniedHandler;
+import huynhlq.dev.udemy.firstproject.exception.CustomAuthenticationEntryPoint;
+import huynhlq.dev.udemy.firstproject.security.JwtAuthenticationFilter;
+import huynhlq.dev.udemy.firstproject.service.impl.CustomUserDetailsService;
+import huynhlq.dev.udemy.firstproject.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,20 +22,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final JwtUtil jwtUtil;
-    private final CustomUserDetailsService customUserDetailsService;
-
+    ///  PROPERTIES
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-
     @Autowired
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    public SecurityConfig(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.customUserDetailsService = customUserDetailsService;
-    }
-
+    /// PUBLIC METHOD
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {

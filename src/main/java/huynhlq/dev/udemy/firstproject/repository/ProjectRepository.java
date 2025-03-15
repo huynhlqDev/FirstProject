@@ -1,8 +1,6 @@
-package huynhlq.dev.udemy.firstproject.repositories;
+package huynhlq.dev.udemy.firstproject.repository;
 
-import huynhlq.dev.udemy.firstproject.entities.Project;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import huynhlq.dev.udemy.firstproject.model.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

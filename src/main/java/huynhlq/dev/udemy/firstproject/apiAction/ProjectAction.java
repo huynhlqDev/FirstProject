@@ -2,8 +2,8 @@ package huynhlq.dev.udemy.firstproject.apiAction;
 
 import huynhlq.dev.udemy.firstproject.common.Logger;
 import huynhlq.dev.udemy.firstproject.common.RequestValidator;
-import huynhlq.dev.udemy.firstproject.entities.Project;
-import huynhlq.dev.udemy.firstproject.services.impl.ProjectServiceImpl;
+import huynhlq.dev.udemy.firstproject.model.entity.Project;
+import huynhlq.dev.udemy.firstproject.service.impl.ProjectServiceImpl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,7 +20,6 @@ public class ProjectAction {
 
     @Autowired
     private ProjectServiceImpl projectService;
-
     @Autowired
     private RequestValidator requestValidator;
 

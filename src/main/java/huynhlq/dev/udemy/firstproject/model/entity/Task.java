@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.entities;
+package huynhlq.dev.udemy.firstproject.model.entity;
 
 import jakarta.persistence.*;
 

@@ -1,8 +1,8 @@
 package huynhlq.dev.udemy.firstproject.apiAction;
 
 import huynhlq.dev.udemy.firstproject.common.Logger;
-import huynhlq.dev.udemy.firstproject.entities.Task;
-import huynhlq.dev.udemy.firstproject.services.TaskService;
+import huynhlq.dev.udemy.firstproject.model.entity.Task;
+import huynhlq.dev.udemy.firstproject.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

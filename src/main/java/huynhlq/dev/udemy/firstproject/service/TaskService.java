@@ -1,6 +1,6 @@
-package huynhlq.dev.udemy.firstproject.services;
+package huynhlq.dev.udemy.firstproject.service;
 
-import huynhlq.dev.udemy.firstproject.entities.Task;
+import huynhlq.dev.udemy.firstproject.model.entity.Task;
 import java.util.List;
 
 public interface TaskService {

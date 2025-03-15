@@ -1,6 +1,6 @@
-package huynhlq.dev.udemy.firstproject.services;
+package huynhlq.dev.udemy.firstproject.service;
 
-import huynhlq.dev.udemy.firstproject.entities.Project;
+import huynhlq.dev.udemy.firstproject.model.entity.Project;
 
 import java.util.List;
 
