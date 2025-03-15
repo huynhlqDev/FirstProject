@@ -35,7 +35,8 @@ public class Project {
 
     private boolean deleted;
 
-    public Project() {}
+    public Project() {
+    }
 
     @PrePersist
     protected void onCreate() {

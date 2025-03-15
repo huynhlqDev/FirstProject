@@ -15,8 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/task")
 public class TaskAction {
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
+
+    public TaskAction(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @GetMapping
     public ResponseEntity<?> getAll() {

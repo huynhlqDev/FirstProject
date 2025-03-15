@@ -29,7 +29,8 @@ public class Account {
     private Date updatedAt;
     private boolean deleted;
 
-    public Account() {}
+    public Account() {
+    }
 
     public Account(String usernameOrEmail, Date createdAt, Date updatedAt, String userId) {
         this.usernameOrEmail = usernameOrEmail;

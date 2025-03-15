@@ -21,7 +21,8 @@ public class Task {
     private Date updatedAt;
     private boolean deleted;
 
-    public Task() {}
+    public Task() {
+    }
 
     @PrePersist
     protected void onCreate() {

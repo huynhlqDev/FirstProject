@@ -4,7 +4,6 @@ import huynhlq.dev.udemy.firstproject.model.entity.Project;
 import huynhlq.dev.udemy.firstproject.exception.ProjectIdException;
 import huynhlq.dev.udemy.firstproject.repository.ProjectRepository;
 import huynhlq.dev.udemy.firstproject.service.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @Service
 public class ProjectServiceImpl implements ProjectService {
     /// PROPERTIES
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
+
+    public ProjectServiceImpl(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
 
     /// PUBLIC METHOD
     @Override
@@ -34,7 +36,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public boolean delete(long projectId) {
         Project proNeed = projectRepository.findById(projectId).orElse(null);
-        if(proNeed != null) {
+        if (proNeed != null) {
             proNeed.setDeleted(true);
             projectRepository.save(proNeed);
             return true;
@@ -45,7 +47,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     public Project getById(String projectId) {
         Project project = projectRepository.getByIdentifier(projectId);
-        if(project == null) {
+        if (project == null) {
             throw new ProjectIdException("Project does not exist!");
         }
         return project;

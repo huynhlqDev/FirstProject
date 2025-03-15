@@ -18,10 +18,13 @@ import java.util.List;
 @RequestMapping("/api/projects")
 public class ProjectAction {
 
-    @Autowired
-    private ProjectServiceImpl projectService;
-    @Autowired
-    private RequestValidator requestValidator;
+    private final ProjectServiceImpl projectService;
+    private final RequestValidator requestValidator;
+
+    public ProjectAction(ProjectServiceImpl projectService, RequestValidator requestValidator) {
+        this.projectService = projectService;
+        this.requestValidator = requestValidator;
+    }
 
     @GetMapping("")
     public ResponseEntity<?> getAll() {

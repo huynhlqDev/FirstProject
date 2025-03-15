@@ -3,15 +3,17 @@ package huynhlq.dev.udemy.firstproject.service.impl;
 import huynhlq.dev.udemy.firstproject.model.entity.Task;
 import huynhlq.dev.udemy.firstproject.repository.TaskRepository;
 import huynhlq.dev.udemy.firstproject.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
+
+    public TaskServiceImpl(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @Override
     public List<Task> getAll() {
@@ -20,7 +22,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task create(Task task) {
-        if(existsById(task.getId())) {
+        if (existsById(task.getId())) {
             return null;
         }
         return taskRepository.save(task);
@@ -28,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task update(Task task) {
-        if(existsById(task.getId())) {
+        if (existsById(task.getId())) {
             return taskRepository.save(task);
         }
         return null;
@@ -37,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public boolean delete(long id) {
         Task taskNeed = taskRepository.findById(id).orElse(null);
-        if(taskNeed != null) {
+        if (taskNeed != null) {
             taskNeed.setDeleted(true);
             taskRepository.save(taskNeed);
             return true;
