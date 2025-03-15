@@ -62,9 +62,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             // In case of failure. Make sure it's clear; so guarantee user won't be authenticated
             SecurityContextHolder.clearContext();
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
         }
 
         // Go to the next filter in the filter chain

@@ -1,16 +1,17 @@
 package huynhlq.dev.udemy.firstproject.apiAction;
 
-import huynhlq.dev.udemy.firstproject.model.dto.LoginRequest;
+import huynhlq.dev.udemy.firstproject.model.dto.UserDTO;
+import huynhlq.dev.udemy.firstproject.model.request.LoginRequest;
+import huynhlq.dev.udemy.firstproject.model.response.LoginResponse;
+import huynhlq.dev.udemy.firstproject.model.response.LoginResponseData;
 import huynhlq.dev.udemy.firstproject.util.JwtUtil;
 import huynhlq.dev.udemy.firstproject.service.impl.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,8 +38,11 @@ public class AuthAction {
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
 
-            UserDetails user = (UserDetails) authentication.getPrincipal();
-            return ResponseEntity.ok(jwtUtil.generateAccessToken(request.getUsername()));
+            String token = jwtUtil.generateAccessToken(request.getUsername());
+            UserDTO userDTO = userService.getUserDTO(request.getUsername());
+            LoginResponse response = new LoginResponse("0000", new LoginResponseData(token,userDTO));
+
+            return ResponseEntity.ok(response);
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("responseData");
         }

@@ -12,15 +12,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+    private String fullName;
+    @Column(unique = true)
     private String username;
     @Column(unique = true)
     private String password;
-
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date createdAt;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedAt;
-
     // Use flag for deletion
     private boolean deleted;
 
@@ -81,5 +81,13 @@ public class User {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }
