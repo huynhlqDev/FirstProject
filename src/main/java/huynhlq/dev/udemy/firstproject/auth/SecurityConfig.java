@@ -1,8 +1,8 @@
-package huynhlq.dev.udemy.firstproject.Auth;
-import huynhlq.dev.udemy.firstproject.Auth.Responses.CustomAuthenticationFailureHandler;
-import huynhlq.dev.udemy.firstproject.Auth.Responses.CustomAuthenticationSuccessHandler;
-import huynhlq.dev.udemy.firstproject.Auth.jwt.JwtAuthenticationFilter;
-import huynhlq.dev.udemy.firstproject.Auth.jwt.JwtUtil;
+package huynhlq.dev.udemy.firstproject.auth;
+import huynhlq.dev.udemy.firstproject.auth.exception.CustomAccessDeniedHandler;
+import huynhlq.dev.udemy.firstproject.auth.exception.CustomAuthenticationEntryPoint;
+import huynhlq.dev.udemy.firstproject.auth.jwt.JwtAuthenticationFilter;
+import huynhlq.dev.udemy.firstproject.auth.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +24,12 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
+
     public SecurityConfig(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService) {
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
@@ -37,6 +43,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/auth/login", "api/auth/register").permitAll() // For login page
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                        .accessDeniedHandler(customAccessDeniedHandler)
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

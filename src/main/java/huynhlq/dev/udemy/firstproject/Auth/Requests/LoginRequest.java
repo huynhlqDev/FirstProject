@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.Auth.Requests;
+package huynhlq.dev.udemy.firstproject.auth.Requests;
 
 public class LoginRequest {
     private String username;

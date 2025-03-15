@@ -1,7 +1,7 @@
 package huynhlq.dev.udemy.firstproject.apiAction;
 
-import huynhlq.dev.udemy.firstproject.Auth.Requests.LoginRequest;
-import huynhlq.dev.udemy.firstproject.Auth.jwt.JwtUtil;
+import huynhlq.dev.udemy.firstproject.auth.Requests.LoginRequest;
+import huynhlq.dev.udemy.firstproject.auth.jwt.JwtUtil;
 import huynhlq.dev.udemy.firstproject.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

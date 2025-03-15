@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.Auth;
+package huynhlq.dev.udemy.firstproject.auth;
 
 import huynhlq.dev.udemy.firstproject.entities.User;
 import huynhlq.dev.udemy.firstproject.repositories.UserRepository;
@@ -6,10 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
-
+/**
+ * Copyright © 2025 HuynhLQ. All rights reserved.
+ * <p>
+ * Author: HuynhLQ
+ * Created: 15/3/25
+ * Description: Service dùng để lấy user data từ DB
+ **/
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

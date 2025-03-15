@@ -1,4 +1,4 @@
-package huynhlq.dev.udemy.firstproject.Auth.jwt;
+package huynhlq.dev.udemy.firstproject.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,9 +13,12 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
+    ///  PROPERTIES
+    private static final String PREFIX = "Bearer";
     private static final String SECRET_KEY = "ThayĐổiChuỗiNàyThànhÍtNhất32KýTự";
     private static final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 15; // 15 minute
 
+    /// PUBLIC METHOD
     public String generateAccessToken(String username) {
         Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
@@ -31,9 +34,18 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String getPrefix() {
+        return PREFIX;
+    }
+
+    public String getSecretKey() {
+        return SECRET_KEY;
+    }
+
+    /// PRIVATE METHOD
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(SECRET_KEY.getBytes())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
