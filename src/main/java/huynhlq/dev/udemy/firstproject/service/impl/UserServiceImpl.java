@@ -1,6 +1,6 @@
 package huynhlq.dev.udemy.firstproject.service.impl;
 
-import huynhlq.dev.udemy.firstproject.exception.IdException;
+import huynhlq.dev.udemy.firstproject.exception.CustomErrorException;
 import huynhlq.dev.udemy.firstproject.model.dto.UserDTO;
 import huynhlq.dev.udemy.firstproject.model.entity.User;
 import huynhlq.dev.udemy.firstproject.repository.UserRepository;
@@ -30,6 +30,15 @@ public class UserServiceImpl implements UserService {
     }
 
     ///  PUBLIC METHOD
+    public boolean validate(String username, String password) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user == null) {
+            return false;
+        } else {
+            return passwordEncoder.matches(password, user.getPassword());
+        }
+    }
+
     public UserDTO findByUsername(String username) {
         User user = userRepository.findByUsername(username).orElse(null);
         if(user != null) {
@@ -45,7 +54,7 @@ public class UserServiceImpl implements UserService {
             User userCreated = userRepository.save(userRequest);
             return getUserDTO(userCreated);
         } catch (Exception e) {
-            throw new IdException("Username: " + userRequest.getUsername() + " already exists!");
+            throw new CustomErrorException("Username: " + userRequest.getUsername() + " already exists!");
         }
     }
 }

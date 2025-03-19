@@ -8,20 +8,20 @@ import org.springframework.http.HttpStatus;
 ///         "identifier": "Duplicate entry '0001' for key 'project.Uem4so99ti26hmi35e2kyb'"
 ///     }
 ///
-public class IdExceptionResponse {
+public class CustomErrorExceptionResponse {
     private String code;
-    private String identifier;
+    private String error;
 
-    public IdExceptionResponse(String identifier) {
+    public CustomErrorExceptionResponse(String identifier) {
         this.code = String.valueOf(HttpStatus.BAD_REQUEST.value());
-        this.identifier = identifier;
+        this.error = identifier;
     }
-    public String getIdentifier() {
-        return identifier;
+    public String getError() {
+        return error;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setError(String error) {
+        this.error = error;
     }
 
     public String getCode() {

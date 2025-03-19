@@ -1,6 +1,6 @@
 package huynhlq.dev.udemy.firstproject.exception;
 
-import huynhlq.dev.udemy.firstproject.model.response.IdExceptionResponse;
+import huynhlq.dev.udemy.firstproject.model.response.CustomErrorExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,10 +11,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 @RestController
-public class idExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomErrorExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<?> handleProjectIdException(IdException ex, WebRequest request) {
-        return new ResponseEntity<>(new IdExceptionResponse(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    public final ResponseEntity<?> handleProjectIdException(CustomErrorException ex, WebRequest request) {
+        return new ResponseEntity<>(new CustomErrorExceptionResponse(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

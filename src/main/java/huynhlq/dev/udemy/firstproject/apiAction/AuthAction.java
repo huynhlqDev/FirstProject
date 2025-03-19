@@ -1,5 +1,6 @@
 package huynhlq.dev.udemy.firstproject.apiAction;
 
+import huynhlq.dev.udemy.firstproject.exception.CustomErrorException;
 import huynhlq.dev.udemy.firstproject.model.dto.UserDTO;
 import huynhlq.dev.udemy.firstproject.model.entity.User;
 import huynhlq.dev.udemy.firstproject.model.request.LoginRequest;
@@ -47,7 +48,7 @@ public class AuthAction {
 
             return ResponseEntity.ok(response);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("invalid username or password");
+            throw new CustomErrorException("invalid username or password");
         }
     }
 

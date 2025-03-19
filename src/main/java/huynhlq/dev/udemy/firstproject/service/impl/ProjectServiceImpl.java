@@ -1,7 +1,7 @@
 package huynhlq.dev.udemy.firstproject.service.impl;
 
 import huynhlq.dev.udemy.firstproject.model.entity.Project;
-import huynhlq.dev.udemy.firstproject.exception.IdException;
+import huynhlq.dev.udemy.firstproject.exception.CustomErrorException;
 import huynhlq.dev.udemy.firstproject.repository.ProjectRepository;
 import huynhlq.dev.udemy.firstproject.service.ProjectService;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
             project.setIdentifier(project.getIdentifier().toLowerCase());
             return projectRepository.save(project);
         } catch (Exception e) {
-            throw new IdException("Project ID: " + project.getIdentifier() + " already exists!");
+            throw new CustomErrorException("Project ID: " + project.getIdentifier() + " already exists!");
         }
     }
 
@@ -48,7 +48,7 @@ public class ProjectServiceImpl implements ProjectService {
     public Project getById(String projectId) {
         Project project = projectRepository.getByIdentifier(projectId);
         if (project == null) {
-            throw new IdException("Project does not exist!");
+            throw new CustomErrorException("Project does not exist!");
         }
         return project;
     }
