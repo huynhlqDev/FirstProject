@@ -3,6 +3,8 @@ package huynhlq.dev.udemy.firstproject.service.impl;
 import huynhlq.dev.udemy.firstproject.exception.CustomErrorException;
 import huynhlq.dev.udemy.firstproject.model.dto.UserDTO;
 import huynhlq.dev.udemy.firstproject.model.entity.User;
+import huynhlq.dev.udemy.firstproject.model.request.LoginRequest;
+import huynhlq.dev.udemy.firstproject.model.request.RegisterRequest;
 import huynhlq.dev.udemy.firstproject.repository.UserRepository;
 import huynhlq.dev.udemy.firstproject.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,14 +49,17 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    public UserDTO save(User userRequest) {
+    public UserDTO save(RegisterRequest request) {
         try {
-            String hashedPassword = passwordEncoder.encode(userRequest.getPassword());
-            userRequest.setPassword(hashedPassword);
-            User userCreated = userRepository.save(userRequest);
+            User regisUser = new User();
+            regisUser.setFullName(request.getFullName());
+            regisUser.setUsername(request.getUsername());
+            regisUser.setPassword(passwordEncoder.encode(request.getPassword()));
+
+            User userCreated = userRepository.save(regisUser);
             return getUserDTO(userCreated);
         } catch (Exception e) {
-            throw new CustomErrorException("Username: " + userRequest.getUsername() + " already exists!");
+            throw new CustomErrorException("Username: " + request.getUsername() + " already exists!");
         }
     }
 }

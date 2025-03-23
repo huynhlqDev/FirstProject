@@ -4,6 +4,7 @@ import huynhlq.dev.udemy.firstproject.exception.CustomErrorException;
 import huynhlq.dev.udemy.firstproject.model.dto.UserDTO;
 import huynhlq.dev.udemy.firstproject.model.entity.User;
 import huynhlq.dev.udemy.firstproject.model.request.LoginRequest;
+import huynhlq.dev.udemy.firstproject.model.request.RegisterRequest;
 import huynhlq.dev.udemy.firstproject.model.response.LoginResponse;
 import huynhlq.dev.udemy.firstproject.model.response.LoginResponseData;
 import huynhlq.dev.udemy.firstproject.util.JwtUtil;
@@ -53,7 +54,7 @@ public class AuthAction {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         UserDTO userDTO = userService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
     }
