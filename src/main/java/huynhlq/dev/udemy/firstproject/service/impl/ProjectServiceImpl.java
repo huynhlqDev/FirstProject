@@ -1,9 +1,14 @@
 package huynhlq.dev.udemy.firstproject.service.impl;
 
+import huynhlq.dev.udemy.firstproject.model.dto.ProjectDTO;
+import huynhlq.dev.udemy.firstproject.model.dto.UserDTO;
 import huynhlq.dev.udemy.firstproject.model.entity.Project;
 import huynhlq.dev.udemy.firstproject.exception.CustomErrorException;
+import huynhlq.dev.udemy.firstproject.model.entity.User;
+import huynhlq.dev.udemy.firstproject.model.request.AddProjectRequest;
 import huynhlq.dev.udemy.firstproject.repository.ProjectRepository;
 import huynhlq.dev.udemy.firstproject.service.ProjectService;
+import huynhlq.dev.udemy.firstproject.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +17,11 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
     /// PROPERTIES
     private final ProjectRepository projectRepository;
+    private final UserService userService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, UserService userService) {
         this.projectRepository = projectRepository;
+        this.userService = userService;
     }
 
     /// PUBLIC METHOD
@@ -24,12 +31,33 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createOrUpdate(Project project) {
+    public ProjectDTO createOrUpdate(AddProjectRequest request) {
         try {
-            project.setIdentifier(project.getIdentifier().toLowerCase());
-            return projectRepository.save(project);
+            UserDTO userRequest = userService.findByUsername(request.getOwnerUsername());
+            if (userRequest == null) {
+                throw new CustomErrorException("User does not exist");
+            }
+
+            Project result = projectRepository.save(new Project(
+                    request.getIdentifier(),
+                    request.getName(),
+                    request.getDescription(),
+                    request.getStartDate(),
+                    request.getEndDate()
+            ));
+
+            return new ProjectDTO(
+                    result.getIdentifier(),
+                    result.getName(),
+                    result.getDescription(),
+                    result.getStartDate().toString(),
+                    result.getEndDate().toString(),
+                    userRequest.getUsername()
+            );
+        } catch (CustomErrorException e) {
+            throw e;
         } catch (Exception e) {
-            throw new CustomErrorException("Project ID: " + project.getIdentifier() + " already exists!");
+            throw new CustomErrorException("Project ID: " + request.getIdentifier() + " already exists!");
         }
     }
 

@@ -2,11 +2,12 @@ package huynhlq.dev.udemy.firstproject.apiAction;
 
 import huynhlq.dev.udemy.firstproject.common.Logger;
 import huynhlq.dev.udemy.firstproject.common.RequestValidator;
+import huynhlq.dev.udemy.firstproject.model.dto.ProjectDTO;
 import huynhlq.dev.udemy.firstproject.model.entity.Project;
+import huynhlq.dev.udemy.firstproject.model.request.AddProjectRequest;
 import huynhlq.dev.udemy.firstproject.service.impl.ProjectServiceImpl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/projects")
 public class ProjectAction {
 
@@ -35,7 +35,7 @@ public class ProjectAction {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid Project project, BindingResult result) {
+    public ResponseEntity<?> create(@RequestBody @Valid AddProjectRequest project, BindingResult result) {
         // Authentication
 
         // Request validation
@@ -46,12 +46,12 @@ public class ProjectAction {
         }
 
         Logger.addActionLog("Creating project " + project.getName());
-        Project createdProject = projectService.createOrUpdate(project);
+        ProjectDTO createdProject = projectService.createOrUpdate(project);
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody @Valid Project project, BindingResult result) {
+    public ResponseEntity<?> update(@RequestBody @Valid AddProjectRequest request, BindingResult result) {
         // Authentication
 
         // Request validation
@@ -61,8 +61,8 @@ public class ProjectAction {
             return responseEntity;
         }
 
-        Logger.addActionLog("Updating project" + project.getName());
-        Project updateProject = projectService.createOrUpdate(project);
+        Logger.addActionLog("Updating project" + request.getName());
+        ProjectDTO updateProject = projectService.createOrUpdate(request);
         return new ResponseEntity<>(updateProject, HttpStatus.OK);
     }
 

@@ -1,6 +1,7 @@
 package huynhlq.dev.udemy.firstproject.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import huynhlq.dev.udemy.firstproject.model.dto.ProjectDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -24,18 +25,31 @@ public class Project {
     @NotBlank(message = "Project description is required")
     private String description;
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date startDate;
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date endDate;
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date createdAt;
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date updatedAt;
 
     private boolean deleted;
 
     public Project() {
+    }
+
+    public Project(String identifier,
+                   String name,
+                   String description,
+                   Date startDate,
+                   Date endDate
+    ) {
+        this.identifier = identifier;
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     @PrePersist
